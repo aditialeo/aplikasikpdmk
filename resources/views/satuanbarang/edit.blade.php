@@ -1,0 +1,46 @@
+@extends('adminlte::page')
+
+@section('title', 'Aplikasi Inventory')
+
+@section('content_header')
+    <h1 class="m-0 text-dark">Ubah Satuan Barang</h1>
+@stop
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('satuanbarang.update', $satuanbarang->id) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="form-group">
+                            <label for="">Nama Satuan</label>
+                            <input type="text" name="nama" value="{{$satuanbarang->nama}}" class="form-control @error('nama') is-invalid @enderror" name="nama"
+                                id="" aria-describedby="satuan_barangHelpId" placeholder="nama">
+                            @error('nama')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Keterangan</label>
+                            <input name="keterangan" type="text" value="{{$satuanbarang->keterangan}}" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan"
+                                id="" aria-describedby="keteranganHelpId" placeholder="keterangan">
+                            @error('keterangan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
