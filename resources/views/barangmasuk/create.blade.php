@@ -10,6 +10,17 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+                </div>
                 <div class="card-body">
                     <form action="{{ route('barangmasuk.store') }}" method="post">
                         @csrf
@@ -17,9 +28,9 @@
 
                         <div class="form-group">
                             <label for="">Nama Barang</label>
-                            <select class="form-control" name="nm_barang" id="">
+                            <select class="form-control" name="nama_barang" id="">
                               @foreach ($barangs as $barang)
-                                  <option value="{{$barang->id}}">{{$barang->nm_barang}}</option>
+                                  <option value="{{$barang->nm_barang}}">{{$barang->nm_barang}}</option>
                               @endforeach
                             </select>
                           </div>
@@ -29,14 +40,14 @@
                             <label for="">Kode Barang</label>
                             <select class="form-control" name="kd_barang" id="">
                               @foreach ($barangs as $barang)
-                                  <option value="{{$barang->id}}">{{$barang->kd_barang}}</option>
+                                  <option value="{{$barang->kd_barang}}">{{$barang->kd_barang}}</option>
                               @endforeach
                             </select>
                           </div>
 
                      <div class="form-group">
                           <label for="">Suplair</label>
-                          <select class="form-control" name="nama_suplair" id="">
+                          <select class="form-control" name="suplair_id" id="">
                             @foreach ($suplairs as $suplair)
                                 <option value="{{$suplair->id}}">{{$suplair->nama_suplair}}</option>
                             @endforeach

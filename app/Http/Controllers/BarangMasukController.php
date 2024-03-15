@@ -36,20 +36,18 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nm_barang' => 'required|string',
+            'nama_barang' => 'required',
             'kd_barang' => 'required',
-            'nama_suplair' => 'required|string',
+            'suplair_id' => 'required',
             'jumlah_masuk' => 'required',
             'merk_id' =>'required'
         ]);
 
-        dd($request->all());
-       // BarangMasuk::create($request->all());
-        //  BarangMasuk::create([
-            // 'nama_barang' => $request->naamabarang,
-            // 'kd_barang' => $request->kdbrang,
-// ]);
-
+        // dd($request->all());
+       $barangMasuk = BarangMasuk::create($request->all());
+        if ($barangMasuk) {
+            $barang = Barang::where('kd_barang',$request->kd_barang)->increment('stok',$request->jumlah_masuk);
+        }
         return to_route('barangmasuk.index');
     }
 
