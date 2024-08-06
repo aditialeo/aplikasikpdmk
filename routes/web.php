@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\MerkController;
+use App\Http\Controllers\RiwayatTransaksiBarangController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\SuplairController;
 use App\Http\Controllers\UserController;
@@ -33,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/jenisbarang',JenisBarangController::class);
     Route::resource('/barangmasuk',BarangMasukController::class);
     Route::resource('/barang',BarangController::class);
+    Route::resource('/riwayattransaksibarang',RiwayatTransaksiBarangController::class);
+    Route::resource('/barangkeluar',BarangKeluarController::class);
 
 });
 

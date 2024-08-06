@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BarangMasuk extends Model
+class BarangKeluar extends Model
 {
     use HasFactory;
-    protected $table ='barang_masuk';
+    protected $table ='barang_keluar';
     protected $primarykey ='id';
     protected $guarded = ['id'];
-
-//belum clear disini
 
     public function barang()
     {
@@ -30,10 +28,11 @@ class BarangMasuk extends Model
     }
 
 
-    public function barangMasuk()
+    public function barangKeluar()
     {
-        return $this->belongsTo(BarangMasuk::class,'jumlah_masuk',);
+        return $this->belongsTo(BarangKeluar::class,'jumlah_keluar',);
     }
+
 
 
 }

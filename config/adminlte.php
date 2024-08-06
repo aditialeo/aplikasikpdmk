@@ -346,6 +346,16 @@ return [
             'url'         => 'barang',
             'icon'        => 'fas fa-fw fa-list',
         ],
+        [
+            'text'        => 'Riwayat Transaksi Barang',
+            'url'         => 'riwayattransaksibarang',
+            'icon'        => 'fas fa-fw fa-list',
+        ],
+        [
+            'text'        => 'Barang Keluar',
+            'url'         => 'barangkeluar',
+            'icon'        => 'fas fa-fw fa-list',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

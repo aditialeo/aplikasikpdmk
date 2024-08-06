@@ -4,7 +4,7 @@
 @section('title', 'Aplikasi Inventory')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Input Barang </h1>
+    <h1 class="m-0 text-dark">Ubah Data Barang </h1>
 @stop
 
 @section('content')
@@ -30,6 +30,7 @@
                     <form action="{{ route('barang.update',$barang->id) }}" method="post">
                         @csrf
                         @method('put')
+
                         <div class="form-group">
                             <label for="">Kode Barang</label>
                             <input type="text" value="{{$barang->kd_barang}}" name="kd_barang" class="form-control @error('kd barang') is-invalid @enderror" name="kd barang"
