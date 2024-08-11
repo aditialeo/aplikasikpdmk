@@ -12,7 +12,16 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a name="" id="" class="btn btn-primary float-right" href="{{route('barangmasuk.create')}}"
+                    {{-- Session pesan success --}}
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    <a name="" id="" class="btn btn-primary float-right text-xs" href="{{route('barangmasuk.create')}}"
                     role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Barang Masuk</a>
                 </div>
                 <div class="card-body">
@@ -20,12 +29,12 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>ID</th>
                                 <th>Nama Barang</th>
                                 <th>Kode Barang</th>
                                 <th>Supplair</th>
                                 <th>Jumlah Masuk</th>
                                 <th>Nama Merk</th>
+                                <th>#</th>
 
                             </tr>
                         </thead>
@@ -33,19 +42,22 @@
                             @foreach ($barangmasuk as $data)
                             <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$data->id}}</td>
-                                    <td>{{$data->nama_barang}}</td>
+                                    <td>{{$data->barang->nm_barang}}</td>
                                     <td>{{$data->kd_barang}}</td>
                                     <td>{{$data->suplair->nama_suplair}}</td>
                                     <td>{{$data->jumlah_masuk}}</td>
                                     <td>{{$data->merk->nama}}</td>
                                 <td>
-                            <a name="" id="" class="btn btn-primary" href="{{route('barangmasuk.edit',$data->id)}}" role="button">Edit</a>
-                                    <form action="{{route('barangmasuk.destroy',$data->id)}}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger">Hapus</button>
-                                    </form>
+                                    <div class="btn-group" role="group">
+                                        <a name="" id="" class="btn btn-primary text-xs" href="{{route('barangmasuk.edit',$data->id)}}" role="button">Edit</a>
+                                        <form action="{{route('barangmasuk.destroy',$data->id)}}" method="post" onsubmit="return confirm('Anda yakin ingin menghapus item ini ?');">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger text-xs">Hapus</button>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </td>
                                 </td>
                             </tr>
                             @endforeach

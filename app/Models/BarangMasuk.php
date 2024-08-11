@@ -16,7 +16,8 @@ class BarangMasuk extends Model
 
     public function barang()
     {
-        return $this->hashMany(Barang::class,'kd_barang','nm_barang');
+        return $this->belongsTo(Barang
+        ::class,'kd_barang','kd_barang');
     }
 
     public function suplair()

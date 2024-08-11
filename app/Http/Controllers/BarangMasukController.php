@@ -17,7 +17,6 @@ class BarangMasukController extends Controller
     public function index()
     {
         $barangmasuk = BarangMasuk::latest()->get();
-        // $barangmasuk = BarangMasuk::orderBy('id','desc')->get();
         return view('barangmasuk.index',compact('barangmasuk'));
     }
 
@@ -46,10 +45,17 @@ class BarangMasukController extends Controller
     {
         $request->validate([
             'nama_barang' => 'required',
-            'kd_barang' => 'required',
+            'kd_barang' => 'required|unique:barang_masuk,kd_barang',
             'suplair_id' => 'required',
             'jumlah_masuk' => 'required',
             'merk_id' =>'required'
+        ],[
+            'nama_barang.required' => 'Nama barang wajib diisi',
+            'kd_barang.required' => 'Kode barang wajib diisi',
+            'kd_barang.unique' => 'Kode barang sudah ada',
+            'suplair_id.required' => 'Suplair wajib diisi',
+            'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
+            'merk_id.required' => 'Merk wajib diisi',
         ]);
        $barangMasuk = BarangMasuk::create($request->all());
 

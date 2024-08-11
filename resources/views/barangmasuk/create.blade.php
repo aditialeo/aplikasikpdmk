@@ -12,49 +12,46 @@
             <div class="card">
                 <div class="card-title">
                     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <form action="{{ route('barangmasuk.store') }}" method="post">
                         @csrf
                         @method('post')
                         <div class="form-group">
-                            <label for="">Kode Barang</label>
-                            <select class="form-control" name="kd_barang" id="kd_barang">
-                            <option> Pilih Kode Barang</option>
-                              @foreach ($barangs as $barang)
-                                  <option value="{{$barang->kd_barang}}">{{$barang->kd_barang}}</option>
-                              @endforeach
+                            <label for="">Barang</label>
+                            <select class="form-control select2" name="kd_barang" id="kd_barang">
+                                <option> Pilih Barang</option>
+                                @foreach ($barangs as $barang)
+                                    <option value="{{ $barang->kd_barang }}">({{ $barang->kd_barang }})
+                                        {{ $barang->nm_barang }}</option>
+                                @endforeach
                             </select>
-                          </div>
+                        </div>
 
                         <div class="form-group">
-                            <label for="">Nama Barang</label>
-                            <input type="text" name="nama_barang" class="form-control" readonly id="nama_barang">
-                          </div>
-
-                     <div class="form-group">
-                          <label for="">Suplair</label>
-                          <select class="form-control" name="suplair_id" id="">
-                            @foreach ($suplairs as $suplair)
-                                <option value="{{$suplair->id}}">{{$suplair->nama_suplair}}</option>
-                            @endforeach
-                          </select>
+                            <label for="">Suplair</label>
+                            <select class="form-control select2" name="suplair_id" id="">
+                                @foreach ($suplairs as $suplair)
+                                    <option value="{{ $suplair->id }}">{{ $suplair->nama_suplair }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
 
                         <div class="form-group">
                             <label for="">Jumlah Masuk</label>
-                            <input type="text" name="jumlah_masuk" class="form-control @error('jumlahmasuk') is-invalid @enderror" name="jumlahmasuk" id=""
-                                aria-describedby="jumlahmasukHelpId" placeholder="jumlahmasuk">
-                                @error('jumlah_masuk')
+                            <input type="text" name="jumlah_masuk"
+                                class="form-control @error('jumlahmasuk') is-invalid @enderror" name="jumlahmasuk"
+                                id="jumlah_masuk" aria-describedby="jumlahmasukHelpId" placeholder="Jumlah Masuk">
+                            @error('jumlah_masuk')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -63,12 +60,12 @@
 
                         <div class="form-group">
                             <label for="">Merk</label>
-                            <select class="form-control" name="merk_id" id="">
-                              @foreach ($merks as $merk)
-                                  <option value="{{$merk->id}}">{{$merk->nama}}</option>
-                              @endforeach
+                            <select class="form-control select2" name="merk_id" id="">
+                                @foreach ($merks as $merk)
+                                    <option value="{{ $merk->id }}">{{ $merk->nama }}</option>
+                                @endforeach
                             </select>
-                          </div>
+                        </div>
 
 
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -78,24 +75,18 @@
         </div>
     </div>
 @stop
+@section('plugins.Select2', true)
 @section('js')
-<script>
-    $(document).ready(function(){
-        $('#kd_barang').on('change',function(){
-            var kdBarang = this.value
-            $.ajax({
-                url:"{{route('api.get.nama_barang')}}",
-                type:"POST",
-                data:{
-                    kd_barang:kdBarang,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success:function(result){
-                    $('#nama_barang').val(result.data.nm_barang)
-                }
-            })
+    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2()
+            $('#jumlah_masuk').inputmask('numeric', {
+                rightAlign: false,
+                allowMinus: false,
+                allowPlus: false,
+                digits: 0
+            });
         })
-    })
-</script>
+    </script>
 @stop
