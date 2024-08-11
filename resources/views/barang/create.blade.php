@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="">Nama Barang</label>
                             <input type="text" name="nm_barang" class="form-control @error('nm_barang') is-invalid @enderror" name="nm_barang" id=""
-                                aria-describedby="nmbarangHelpId" placeholder="namabarang">
+                                aria-describedby="nmbarangHelpId" placeholder="Nama Barang">
                                 @error('nm_barang')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
 
                        <div class="form-group">
                          <label for="">Satuan Barang</label>
-                         <select class="form-control" name="satuan_barang_id" id="">
+                         <select class="form-control select2" name="satuan_barang_id" id="">
                            @foreach ($satuanBarangs as $satuanBarang)
                                 <option value="{{$satuanBarang->id}}">{{$satuanBarang->nama}}</option>
                            @endforeach
@@ -65,7 +65,7 @@
 
                         <div class="form-group">
                           <label for="">Jenis Barang</label>
-                          <select class="form-control" name="jenis_barang_id" id="">
+                          <select class="form-control select2" name="jenis_barang_id" id="">
                             @foreach ($jenisBarangs as $jenisBarang)
                                 <option value="{{$jenisBarang->id}}">{{$jenisBarang->nama}}</option>
                             @endforeach
@@ -85,7 +85,7 @@
 
                         <div class="form-group">
                           <label for="">Merk</label>
-                          <select class="form-control" name="merk_id" id="">
+                          <select class="form-control select2" name="merk_id" id="">
                             @foreach ($merks as $merk)
                                 <option value="{{$merk->id}}">{{$merk->nama}}</option>
                             @endforeach
@@ -100,6 +100,7 @@
         </div>
     </div>
 @endsection
+@section('plugins.select2', true)
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
 <script>
@@ -110,6 +111,7 @@
             allowPlus: false,
             digits: 0
         });
+        $('.select2').select2();
     });
 </script>
 @stop

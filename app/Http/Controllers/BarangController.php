@@ -48,7 +48,7 @@ class BarangController extends Controller
 
         Barang::create($request->all());
 
-        return to_route('barang.index');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan');
     }
 
     /**
@@ -95,7 +95,7 @@ class BarangController extends Controller
            'stok'=>$request->stok,
            'merk_id'=>$request->merk_id,
         ]);
-        return to_route('barang.index');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui');
     }
 
     /**
@@ -104,6 +104,6 @@ class BarangController extends Controller
     public function destroy($id)
     {
         Barang::destroy($id);
-        return to_route('barang.index');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
     }
 }

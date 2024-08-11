@@ -11,6 +11,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    {{-- Session pesan success --}}
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <a name="" id="" class="btn btn-primary float-right text-xs" href="{{ route('barang.create') }}"
                         role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Barang</a>
                 </div>
@@ -43,11 +52,12 @@
                                         <div class="d-flex">
                                             <a name="" id="" class="btn btn-primary mr-2 text-xs"
                                                 href="{{ route('barang.edit', $data->id) }}" role="button">Edit</a>
-                                            <form action="{{ route('barang.destroy', $data->id) }}" method="post">
+                                            <form action="{{ route('barang.destroy', $data->id) }}" method="post" onsubmit="return confirm('Kamu yakin ingin menghapus barang ini ?');">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger text-xs">Hapus</button>
                                             </form>
+                                        </div>
                                         </div>
                                     </td>
                                 </tr>
