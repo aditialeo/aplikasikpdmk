@@ -33,7 +33,9 @@
                         <div class="form-group">
                             <label for="">Kode Barang</label>
                             <input type="text" name="kd_barang" class="form-control @error('kd_barang') is-invalid @enderror" name="kd_barang"
-                                id="" aria-describedby="kodebarangHelpId" placeholder="kd_barang">
+                                id="kd_barang" aria-describedby="kodebarangHelpId" placeholder="Masukan Kode Barang">
+                            {{-- Helper Text --}}
+                            <small id="kodebarangHelpId" class="form-text text-muted"><em>Kode Barang Berupa Angka tidak boleh simbol atau huruf</em></small>
                             @error('kd_barang')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -72,7 +74,7 @@
 
                         <div class="form-group">
                             <label for="">Stok</label>
-                            <input type="text" class="form-control @error('stok') is-invalid @enderror" name="stok" id=""
+                            <input type="text" class="form-control @error('stok') is-invalid @enderror" name="stok" id="stok"
                                 aria-describedby="stokHelpId" placeholder="stok">
                                 @error('stok')
                                 <span class="invalid-feedback" role="alert">
@@ -98,3 +100,16 @@
         </div>
     </div>
 @endsection
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#stok,#kd_barang').inputmask('numeric', {
+            rightAlign: false,
+            allowMinus: false,
+            allowPlus: false,
+            digits: 0
+        });
+    });
+</script>
+@stop
