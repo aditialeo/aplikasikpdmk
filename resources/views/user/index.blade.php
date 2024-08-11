@@ -11,11 +11,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a name="" id="" class="btn btn-primary float-right" href="{{route('user.create')}}"
-                    role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data User</a>
+                    <a name="" id="" class="btn btn-primary float-right text-xs font-bold"
+                        href="{{ route('user.create') }}" role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Tambah Data User</a>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>NO</th>
@@ -27,16 +28,19 @@
                         <tbody>
                             @foreach ($user as $data)
                                 <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$data->name}}</td>
-                                    <td>{{$data->email}}</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->name }}</td>
+                                    <td>{{ $data->email }}</td>
                                     <td>
-                                        <a name="" id="" class="btn btn-primary" href="{{route('user.edit',$data->id)}}" role="button">Edit</a>
-                                        <form action="{{route('user.destroy',$data->id)}}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
+                                        <div class="d-flex">
+                                            <a name="" id="" class="btn btn-primary mr-2 text-xs"
+                                                href="{{ route('user.edit', $data->id) }}" role="button">Edit</a>
+                                            <form action="{{ route('user.destroy', $data->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger text-xs">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -46,4 +50,12 @@
             </div>
         </div>
     </div>
+@stop
+@section('plugins.Datatables', true)
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        });
+    </script>
 @stop

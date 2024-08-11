@@ -312,49 +312,49 @@ return [
             'icon'        => 'far fa-fw fa-file'
         ],
         [
-            'text'        => 'User',
-            'url'         => 'user',
-            'icon'        => 'far fa-fw fa-user',
-        ],
-        [
-            'text'        => 'Suplair',
-            'url'         => 'suplair',
-            'icon'        => 'fas fa-fw fa-list',
-        ],
-        [
-            'text'        => 'Satuan Barang',
-            'url'         => 'satuanbarang',
-            'icon'        => 'fas fa-fw fa-list',
-        ],
-        [
-            'text'        => 'Merk',
-            'url'         => 'merk',
-            'icon'        => 'fas fa-fw fa-list',
-        ],
-        [
-            'text'        => 'Jenis Barang',
-            'url'         => 'jenisbarang',
-            'icon'        => 'fas fa-fw fa-list',
+            'text'        => 'Barang',
+            'url'         => 'barang',
+            'icon'        => 'fas fa-fw fa-boxes',
         ],
         [
             'text'        => 'Barang Masuk',
             'url'         => 'barangmasuk',
-            'icon'        => 'fas fa-fw fa-list',
-        ],
-        [
-            'text'        => 'Barang',
-            'url'         => 'barang',
-            'icon'        => 'fas fa-fw fa-list',
-        ],
-        [
-            'text'        => 'Riwayat Transaksi Barang',
-            'url'         => 'riwayattransaksibarang',
-            'icon'        => 'fas fa-fw fa-list',
+            'icon'        => 'fas fa-fw fa-box-open',
         ],
         [
             'text'        => 'Barang Keluar',
             'url'         => 'barangkeluar',
-            'icon'        => 'fas fa-fw fa-list',
+            'icon'        => 'fas fa-fw fa-parachute-box',
+        ],
+        [
+            'text'        => 'Riwayat Transaksi Barang',
+            'url'         => 'riwayattransaksibarang',
+            'icon'        => 'fas fa-fw fa-business-time',
+        ],
+        [
+            'text'        => 'Suplair',
+            'url'         => 'suplair',
+            'icon'        => 'fas fa-fw fa-shipping-fast',
+        ],
+        [
+            'text'        => 'Satuan Barang',
+            'url'         => 'satuanbarang',
+            'icon'        => 'fas fa-fw fa-ruler-horizontal',
+        ],
+        [
+            'text'        => 'Merk',
+            'url'         => 'merk',
+            'icon'        => 'fas fa-fw fa-tags',
+        ],
+        [
+            'text'        => 'Jenis Barang',
+            'url'         => 'jenisbarang',
+            'icon'        => 'fas fa-fw fa-grip-vertical',
+        ],
+        [
+            'text'        => 'User',
+            'url'         => 'user',
+            'icon'        => 'far fa-fw fa-user',
         ],
         // ['header' => 'account_settings'],
         // [
@@ -444,21 +444,21 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
