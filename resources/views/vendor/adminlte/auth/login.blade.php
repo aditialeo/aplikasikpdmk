@@ -27,7 +27,7 @@
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="name" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.name') }}" autofocus>
+                   value="{{ old('name') }}" placeholder="Nama" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
