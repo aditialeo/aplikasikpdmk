@@ -30,55 +30,24 @@ class BarangMasukController extends Controller
         $suplairs = Suplair::all();
         return view('barangmasuk.create',compact('barangs','suplairs','merks'));
     }
-
-    // api ambil nama barang
-    public function getNamaBarang(Request $request)
-    {
-        $data['data'] = Barang::where('kd_barang',$request->kd_barang)->first();
-        return response()->json($data);
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nama_barang' => 'required',
-            'kd_barang' => 'required|unique:barang_masuk,kd_barang',
+            'kd_barang' => 'required',
             'suplair_id' => 'required',
             'jumlah_masuk' => 'required',
             'merk_id' =>'required'
         ],[
-            'nama_barang.required' => 'Nama barang wajib diisi',
             'kd_barang.required' => 'Kode barang wajib diisi',
-            'kd_barang.unique' => 'Kode barang sudah ada',
             'suplair_id.required' => 'Suplair wajib diisi',
             'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
             'merk_id.required' => 'Merk wajib diisi',
         ]);
        $barangMasuk = BarangMasuk::create($request->all());
-
-        // if ($barangMasuk) {
-
-        //     $request->request->add(['jenis'=>'barang_masuk'],);
-        //     $request->request->add(['stok'=>$request->jumlah_masuk]);
-
-        //     $riwayat_barang = RiwayatTransaksiBarang::create($request->all());
-        //     // Cara Manual insert data eloquent
-        //     // $riwayat_barang = RiwayatTransaksiBarang::create([
-        //     //     'nama_barang' => $request->nama_barang,
-        //     //     'kd_barang' => $request->kd_barang,
-        //     //     'suplair_id' => $request->suplair_id,
-        //     //     'jumlah_masuk' => $request->jumlah_masuk,
-        //     //     'merk_id' => $request->merk_id,
-        //     //     'jenis' => 'barang_masuk'
-        //     // ]);
-
-        //     $barang = Barang::where('kd_barang',
-        //     $request->kd_barang)->increment('stok',$request->jumlah_masuk);
-        // }
-        return to_route('barangmasuk.index');
+        return redirect()->route('barangmasuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
 
     }
 

@@ -19,6 +19,13 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                    @elseif (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     @endif
                     <a name="" id="" class="btn btn-primary float-right text-xs" href="{{ route('barang.create') }}"
                         role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Barang</a>

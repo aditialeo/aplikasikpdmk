@@ -25,7 +25,7 @@
                     role="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Barang Masuk</a>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>NO</th>
@@ -48,7 +48,7 @@
                                     <td>{{$data->jumlah_masuk}}</td>
                                     <td>{{$data->merk->nama}}</td>
                                 <td>
-                                    <div class="btn-group" role="group">
+                                    <div class="d-flex">
                                         <a name="" id="" class="btn btn-primary text-xs" href="{{route('barangmasuk.edit',$data->id)}}" role="button">Edit</a>
                                         <form action="{{route('barangmasuk.destroy',$data->id)}}" method="post" onsubmit="return confirm('Anda yakin ingin menghapus item ini ?');">
                                             @csrf
@@ -68,4 +68,12 @@
             </div>
         </div>
     </div>
+@stop
+@section('plugins.Datatables', true)
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        });
+    </script>
 @stop

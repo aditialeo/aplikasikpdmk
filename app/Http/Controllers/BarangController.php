@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Merk;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\JenisBarang;
-use App\Models\Merk;
+use App\Models\BarangKeluar;
 use App\Models\SatuanBarang;
 use Illuminate\Http\Request;
 
@@ -119,7 +120,15 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        Barang::destroy($id);
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
+        try {
+            $barang =  Barang::find($id);
+            // cek dan hapus jika ada barang masuk dan barang keluar
+            $barang->barangMasuk()->delete();
+            $barang->barangKeluar()->delete();
+            $barang->delete();
+            return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->route('barang.index')->with('error', 'Barang gagal dihapus !.');
+        }
     }
 }

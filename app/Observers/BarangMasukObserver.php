@@ -14,23 +14,11 @@ class BarangMasukObserver
      */
     public function created(BarangMasuk $barangMasuk): void
     {
-        // dd(request()->all());
         if ($barangMasuk) {
-
             request()->request->add(['jenis'=>'barang_masuk']);
             request()->request->add(['stok'=>request()->jumlah_masuk]);
 
             $riwayat_barang = RiwayatTransaksiBarang::create(request()->all());
-            // Cara Manual insert data eloquent
-            // $riwayat_barang = RiwayatTransaksiBarang::create([
-            //     'nama_barang' => $request->nama_barang,
-            //     'kd_barang' => $request->kd_barang,
-            //     'suplair_id' => $request->suplair_id,
-            //     'jumlah_masuk' => $request->jumlah_masuk,
-            //     'merk_id' => $request->merk_id,
-            //     'jenis' => 'barang_masuk'
-            // ]);
-
             $barang = Barang::where('kd_barang',
             request()->kd_barang)->increment('stok',request()->jumlah_masuk);
         }
@@ -49,7 +37,8 @@ class BarangMasukObserver
      */
     public function deleted(BarangMasuk $barangMasuk): void
     {
-        //
+        //when barang masuk deleted update stok in table barang
+        $barang = Barang::where('kd_barang',$barangMasuk->kd_barang)->decrement('stok',$barangMasuk->jumlah_masuk);
     }
 
     /**

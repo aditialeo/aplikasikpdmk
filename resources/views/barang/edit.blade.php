@@ -92,7 +92,7 @@
 
                                         <div class="form-group">
                                             <label for="">Merk</label>
-                                            <select class="form-control select2" value="{{ $barang->merk_id }}" name="merk_id"
+                                            <select class="form-control" value="{{ $barang->merk_id }}" name="merk_id"
                                                 id="">
                                                 @foreach ($merks as $merk)
                                                     <option value="{{ $merk->id }}">{{ $merk->nama }}</option>
