@@ -12,60 +12,56 @@
             <div class="card">
                 <div class="card-title">
                     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('barangkeluar.store') }}" method="post">
+                    <form id="barangForm" action="{{ route('barangkeluar.store') }}" method="post">
                         @csrf
                         @method('post')
 
                         <div class="form-group">
-                            <label for="">Kode Barang</label>
-                            <select class="form-control" name="kd_barang" id="kd_barang">
+                            <label for="kd_barang">Kode Barang</label>
+                            <select class="form-control select2" name="kd_barang" id="kd_barang">
                                 <option> Pilih Kode Barang </option>
-                              @foreach ($barangs as $barang)
-                                  <option value="{{$barang->kd_barang}}">{{$barang->kd_barang}}</option>
-                              @endforeach
+                                @foreach ($barangs as $barang)
+                                    <option value="{{ $barang->kd_barang }}" data-stok="{{ $barang->stok }}">
+                                        {{ $barang->kd_barang }} - {{$barang->nm_barang}} (stok:{{$barang->stok}})
+                                    </option>
+                                @endforeach
                             </select>
-                          </div>
-
-                        <div class="form-group">
-                            <label for="">Nama Barang</label>
-                            <input type="text" name="nama_barang" class="form-control" readonly id="nama_barang">
-                          </div>
-
-
-
-                     <div class="form-group">
-                          <label for="">Suplair</label>
-                          <select class="form-control" name="suplair_id" id="">
-                            @foreach ($suplairs as $suplair)
-                                <option value="{{$suplair->id}}">{{$suplair->nama_suplair}}</option>
-                            @endforeach
-                          </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="">Merk</label>
-                            <select class="form-control" name="merk_id" id="">
-                              @foreach ($merks as $merk)
-                                  <option value="{{$merk->id}}">{{$merk->nama}}</option>
-                              @endforeach
+                            <label for="suplair_id">Suplair</label>
+                            <select class="form-control select2" name="suplair_id" id="suplair_id">
+                                @foreach ($suplairs as $suplair)
+                                    <option value="{{ $suplair->id }}">{{ $suplair->nama_suplair }}</option>
+                                @endforeach
                             </select>
-                          </div>
+                        </div>
 
-                          <div class="form-group">
-                            <label for="">Tanggal Keluar</label>
-                            <input type="date" name="tanggal_keluar" class="form-control @error('tanggalkeluar') is-invalid @enderror" name="tanggalkeluar" id=""
-                                aria-describedby="tanggalkeluarHelpId" placeholder="tanggalkeluar">
-                                @error('tanggal_keluar')
+                        <div class="form-group">
+                            <label for="merk_id">Merk</label>
+                            <select class="form-control select2" name="merk_id" id="merk_id">
+                                @foreach ($merks as $merk)
+                                    <option value="{{ $merk->id }}">{{ $merk->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tanggal_keluar">Tanggal Keluar</label>
+                            <input type="date" name="tanggal_keluar"
+                                class="form-control @error('tanggal_keluar') is-invalid @enderror" id="tanggal_keluar"
+                                aria-describedby="tanggal_keluarHelpId" placeholder="Tanggal Keluar">
+                            @error('tanggal_keluar')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -73,20 +69,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Jumlah Keluar</label>
-                            <input type="text" name="jumlah_keluar" class="form-control @error('jumlahkeluar') is-invalid @enderror" name="jumlahkeluar" id=""
-                                aria-describedby="jumlahkeluarHelpId" placeholder="jumlahkeluar">
-                                @error('jumlah_keluar')
+                            <label for="jumlah_keluar">Jumlah Keluar</label>
+                            <input type="text" name="jumlah_keluar"
+                                class="form-control @error('jumlah_keluar') is-invalid @enderror" id="jumlah_keluar"
+                                aria-describedby="jumlah_keluarHelpId" placeholder="Jumlah Keluar">
+                            @error('jumlah_keluar')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
 
-
-
-
-
+                        <!-- Hidden input to store the selected stok value -->
+                        <input type="hidden" id="stok" name="stok">
 
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
@@ -95,24 +90,43 @@
         </div>
     </div>
 @stop
+
+@section('plugins.select2', true)
+
 @section('js')
-<script>
-    $(document).ready(function(){
-        $('#kd_barang').on('change',function(){
-            var kdBarang = this.value
-            $.ajax({
-                url:"{{route('api.get.produk_barang')}}",
-                type:"POST",
-                data:{
-                    kd_barang:kdBarang,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success:function(result){
-                    $('#nama_barang').val(result.data.nm_barang)
+    <!-- Input mask cdnjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+
+            // Input mask for jumlah_keluar
+            $('#jumlah_keluar').inputmask({
+                alias: 'numeric',
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 0,
+                rightAlign: false,
+                allowMinus: false
+            });
+
+            // Update stok value when a new Kode Barang is selected
+            $('#kd_barang').on('change', function() {
+                var selectedOption = $(this).find('option:selected');
+                var stok = selectedOption.data('stok');
+                $('#stok').val(stok);
+            });
+
+            // Form submission validation
+            $('#barangForm').on('submit', function(e) {
+                var stok = parseInt($('#stok').val());
+                var jumlahKeluar = parseInt($('#jumlah_keluar').inputmask('unmaskedvalue'));
+
+                if (jumlahKeluar > stok) {
+                    e.preventDefault();
+                    alert('Jumlah Tidak Boleh Melebihi Stok');
                 }
-            })
-        })
-    })
-</script>
+            });
+        });
+    </script>
 @stop

@@ -19,7 +19,7 @@ class BarangKeluarController extends Controller
     public function index()
     {
         $barangkeluar = BarangKeluar::all();
-        return view('barangkeluar.index',compact('barangkeluar'));
+        return view('barangkeluar.index', compact('barangkeluar'));
     }
 
     /**
@@ -27,40 +27,33 @@ class BarangKeluarController extends Controller
      */
     public function create()
     {
-        $barangs= Barang::all();
-        $suplairs= Suplair::all();
-        $merks= Merk::all();
-        return view('barangkeluar.create',compact('barangs','suplairs','merks'));
+        $barangs = Barang::all();
+        $suplairs = Suplair::all();
+        $merks = Merk::all();
+        return view('barangkeluar.create', compact('barangs', 'suplairs', 'merks'));
     }
-
-// api ambil nama barang keluar
-
-public function getNamaBarang(Request $request)
-{
-    $data['data'] = Barang::where('kd_barang',$request->kd_barang)->first();
-    return response()->json($data);
-}
-
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(BarangRequest $request)
     {
-        $barangKeluar= BarangKeluar::create($request->validated());
+        $barangKeluar = BarangKeluar::create($request->validated());
 
         if ($barangKeluar) {
 
-            $request->request->add(['jenis'=>'barang_keluar'],);
-            $request->request->add(['stok'=>$request->jumlah_keluar]);
+            $request->request->add(['jenis' => 'barang_keluar'],);
+            $request->request->add(['stok' => $request->jumlah_keluar]);
 
             // Membuat riwayat transaksi barang
             $riwayat_barang = RiwayatTransaksiBarang::create($request->all());
-            $barang = Barang::where('kd_barang',
-            $request->kd_barang)->decrement('stok',$request->jumlah_keluar);
+            $barang = Barang::where(
+                'kd_barang',
+                $request->kd_barang
+            )->decrement('stok', $request->jumlah_keluar);
         }
-      return to_route('barangkeluar.index');
+
+        return redirect()->route('barangkeluar.index')->with('success', 'Berhasil menambahkan barang keluar');
     }
 
     /**
