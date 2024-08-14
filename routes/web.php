@@ -1,15 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MerkController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BarangController;
-use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\SuplairController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
-use App\Http\Controllers\MerkController;
-use App\Http\Controllers\RiwayatTransaksiBarangController;
+use App\Http\Controllers\TitipBarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\SatuanBarangController;
-use App\Http\Controllers\SuplairController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RiwayatTransaksiBarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/barang',BarangController::class);
     Route::resource('/riwayattransaksibarang',RiwayatTransaksiBarangController::class);
     Route::resource('/barangkeluar',BarangKeluarController::class);
+    Route::resource('/titip-barang',TitipBarangController::class);
 
 });
 

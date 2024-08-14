@@ -317,6 +317,11 @@ return [
             'icon'        => 'fas fa-fw fa-boxes',
         ],
         [
+            'text'        => 'Titip Barang',
+            'url'         => 'titip-barang',
+            'icon'        => 'fas fa-fw fa-save',
+        ],
+        [
             'text'        => 'Barang Masuk',
             'url'         => 'barangmasuk',
             'icon'        => 'fas fa-fw fa-box-open',
