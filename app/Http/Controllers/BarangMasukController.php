@@ -79,7 +79,6 @@ class BarangMasukController extends Controller
     public function update(Request $request, string $id)
 {
     $request->validate([
-        'nm_barang' => 'required',
         'kd_barang' => 'required',
         'suplair_id' => 'required',
         'jumlah_masuk' => 'required',
