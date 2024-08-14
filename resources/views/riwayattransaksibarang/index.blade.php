@@ -44,3 +44,11 @@
         </div>
     </div>
 @stop
+@section('plugins.Datatables', true)
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        });
+    </script>
+@stop

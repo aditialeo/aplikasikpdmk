@@ -37,8 +37,6 @@ class SuplairController extends Controller
             'no_telpon' => 'required|string',
         ]);
 
-        // dd($request->all());
-
         Suplair::create($request->all());
 
         return to_route('suplair.index');
