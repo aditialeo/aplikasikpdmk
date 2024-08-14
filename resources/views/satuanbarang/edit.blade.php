@@ -10,14 +10,21 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-header">
+                    // tombol kembali
+                    <a name="" id="" class="btn btn-secondary float-right text-xs"
+                        href="{{ route('satuanbarang.index') }}" role="button"><i class="fa fa-arrow-left"
+                            aria-hidden="true"></i> Kembali</a>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('satuanbarang.update', $satuanbarang->id) }}" method="post">
                         @csrf
                         @method('put')
                         <div class="form-group">
                             <label for="">Nama Satuan</label>
-                            <input type="text" name="nama" value="{{$satuanbarang->nama}}" class="form-control @error('nama') is-invalid @enderror" name="nama"
-                                id="" aria-describedby="satuan_barangHelpId" placeholder="nama">
+                            <input type="text" name="nama" value="{{ $satuanbarang->nama }}"
+                                class="form-control @error('nama') is-invalid @enderror" name="nama" id=""
+                                aria-describedby="satuan_barangHelpId" placeholder="nama">
                             @error('nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -27,7 +34,8 @@
 
                         <div class="form-group">
                             <label for="">Keterangan</label>
-                            <input name="keterangan" type="text" value="{{$satuanbarang->keterangan}}" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan"
+                            <input name="keterangan" type="text" value="{{ $satuanbarang->keterangan }}"
+                                class="form-control @error('keterangan') is-invalid @enderror" name="keterangan"
                                 id="" aria-describedby="keteranganHelpId" placeholder="keterangan">
                             @error('keterangan')
                                 <span class="invalid-feedback" role="alert">

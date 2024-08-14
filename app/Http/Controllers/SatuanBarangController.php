@@ -39,7 +39,7 @@ class SatuanBarangController extends Controller
 
         SatuanBarang::create($request->all());
 
-        return to_route('satuanbarang.index');
+        return redirect()->route('satuanbarang.index')->with('success', 'Satuan barang berhasil ditambahkan');
     }
 
     /**
@@ -77,7 +77,7 @@ class SatuanBarangController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return to_route('satuanbarang.index');
+        return redirect()->route('satuanbarang.index')->with('success', 'Data satuan barang berhasil diperbarui');
 
     }
 
@@ -85,13 +85,12 @@ class SatuanBarangController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id){
-
-        // $user = User::find($id);
-        // $user->delete();
-
-        SatuanBarang::destroy($id);
-
-        return to_route('satuanbarang.index');
+        try {
+            SatuanBarang::destroy($id);
+        } catch (\Exception $e) {
+            return redirect()->route('satuanbarang.index')->with('error', 'Data satuan barang tidak bisa dihapus. Data masih digunakan di tabel lain');
+        }
+        return redirect()->route('satuanbarang.index')->with('success', 'Data satuan barang berhasil dihapus');
     }
 
 }

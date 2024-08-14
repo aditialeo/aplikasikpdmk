@@ -81,7 +81,7 @@ class SuplairController extends Controller
             'no_telpon' => $request->no_telpon,
         ]);
 
-        return to_route('suplair.index');
+        return redirect()->route('suplair.index')->with('success', 'Suplair berhasil diperbarui');
 
     }
 
