@@ -11,6 +11,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ Session::get('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @elseif(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ Session::get('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <a name="" id="" class="btn btn-primary text-xs float-right"
                         href="{{ route('barangkeluar.create') }}" role="button"><i class="fa fa-plus-circle"
                             aria-hidden="true"></i> Tambah Barang Keluar</a>
@@ -41,12 +56,16 @@
                                     <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->isoformat('dddd, D MMMM YYYY') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('barangkeluar.edit', $data->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                        <form action="{{ route('barangkeluar.destroy', $data->id) }}" method="POST" style="display: inline-block;">
+                                        <a href="{{ route('barangkeluar.edit', $data->id) }}"
+                                            class="btn btn-primary btn-sm">Edit</a>
+                                        <form action="{{ route('barangkeluar.destroy', $data->id) }}" method="POST"
+                                            style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Apa Kamu yakin ingin hapus data ini?')">Delete</button>
                                         </form>
+                                    </td>
                                     </td>
                                 </tr>
                             @endforeach

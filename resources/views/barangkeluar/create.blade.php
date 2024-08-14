@@ -29,7 +29,6 @@
                         <div class="form-group">
                             <label for="kd_barang">Kode Barang</label>
                             <select class="form-control select2" name="kd_barang" id="kd_barang">
-                                <option> Pilih Kode Barang </option>
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->kd_barang }}" data-stok="{{ $barang->stok }}">
                                         {{ $barang->kd_barang }} - {{$barang->nm_barang}} (stok:{{$barang->stok}})

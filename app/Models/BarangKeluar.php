@@ -27,12 +27,4 @@ class BarangKeluar extends Model
         return $this->belongsTo(Merk::class,'merk_id', 'id');
     }
 
-
-    public function barangKeluar()
-    {
-        return $this->belongsTo(BarangKeluar::class,'jumlah_keluar',);
-    }
-
-
-
 }

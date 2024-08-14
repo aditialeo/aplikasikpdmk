@@ -69,7 +69,11 @@ class BarangKeluarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = BarangKeluar::find($id);
+        $barangs = Barang::all();
+        $suplairs = Suplair::all();
+        $merks = Merk::all();
+        return view('barangkeluar.edit', compact('data', 'barangs', 'suplairs', 'merks'));
     }
 
     /**
@@ -77,7 +81,26 @@ class BarangKeluarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'kd_barang' => 'required',
+            'jumlah_keluar' => 'required',
+            'tanggal_keluar' => 'required',
+            'merk_id' => 'required',
+            'suplair_id' => 'required',
+        ]);
+
+        //search barang keluar kemudian update stok barang berdasarkan stok barang keluar sebelumnya kemudian update barang keluar dengan stok baru kemudian update stok barang, stok barang keluar tidak boleh lebih besar dari stok barang
+        $barangKeluar = BarangKeluar::find($id);
+        $barang = Barang::where('kd_barang', $barangKeluar->kd_barang)->first();
+        if ($request->jumlah_keluar > ($barang->stok + $barangKeluar->jumlah_keluar)) {
+            return redirect()->route('barangkeluar.index')->with('error', 'Jumlah barang keluar tidak boleh lebih besar dari stok barang');
+        } else {
+            //update request jumlah_keluar
+            $barang->update(['stok' => $barang->stok + $barangKeluar->jumlah_keluar]);
+            $barang = Barang::where('kd_barang', $request->kd_barang)->decrement('stok', $request->jumlah_keluar);
+            $barangKeluar->update($request->all());
+            return redirect()->route('barangkeluar.index')->with('success', 'Berhasil mengubah barang keluar');
+        }
     }
 
     /**
@@ -85,6 +108,11 @@ class BarangKeluarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //search barang keluar kemudian update jumlah barang baru kemudian hapus barang keluar
+        $barangKeluar = BarangKeluar::find($id);
+        $barang = Barang::where('kd_barang', $barangKeluar->kd_barang)->increment('stok', $barangKeluar->jumlah_keluar);
+        $barangKeluar->delete();
+
+        return redirect()->route('barangkeluar.index')->with('success', 'Berhasil menghapus barang keluar');
     }
 }
