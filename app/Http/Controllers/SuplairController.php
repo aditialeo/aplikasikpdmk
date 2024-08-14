@@ -39,7 +39,7 @@ class SuplairController extends Controller
 
         Suplair::create($request->all());
 
-        return to_route('suplair.index');
+        return redirect()->route('suplair.index')->with('success', 'Suplair Berhasil Ditambahkan');
     }
 
     /**
@@ -93,7 +93,7 @@ class SuplairController extends Controller
     {
         Suplair::destroy($id);
 
-        return to_route('suplair.index');
+        return redirect()->route('suplair.index')->with('error', 'Suplair berhasil dihapus');
     }
 
 }
