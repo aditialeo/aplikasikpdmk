@@ -10,6 +10,10 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-header">
+                    <a name="" id="" class="btn btn-secondary float-right text-xs" href="{{ route('merk.index') }}"
+                        role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('merk.store') }}" method="post">
                         @csrf

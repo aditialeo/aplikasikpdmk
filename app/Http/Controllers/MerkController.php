@@ -39,7 +39,7 @@ class MerkController extends Controller
 
 
 
-        return to_route('merk.index');
+        return to_route('merk.index')->with('success', 'Merk Berhasil Ditambahkan');
     }
 
     /**
@@ -78,7 +78,7 @@ class MerkController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return to_route('merk.index');
+        return to_route('merk.index')->with('success', 'Merk Berhasil Diupdate');
     }
 
 
@@ -88,12 +88,13 @@ class MerkController extends Controller
      */
     public function destroy($id){
 
-        // $user = User::find($id);
-        // $user->delete();
+        try {
+            Merk::destroy($id);
+        } catch (\Throwable $th) {
+            return to_route('merk.index')->with('error', 'Merk gagal dihapus. Merk masih terhubung dengan barang');
+        }
 
-        Merk::destroy($id);
-
-        return to_route('merk.index');
+        return to_route('merk.index')->with('success', 'Merk berhasil dihapus');
     }
 
 }

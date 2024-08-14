@@ -38,8 +38,7 @@ class JenisBarangController extends Controller
 
         JenisBarang::create($request->all());
 
-        return to_route('jenisbarang.index');
-
+        return to_route('jenisbarang.index')->with('success', 'Jenis barang berhasil ditambahkan');
 
     }
 
@@ -78,16 +77,19 @@ class JenisBarangController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return to_route('jenisbarang.index');
+        return to_route('jenisbarang.index')->with('success', 'Jenis barang berhasil diperbarui');
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        JenisBarang::destroy($id);
-
-        return to_route('jenisbarang.index');
+        try {
+            JenisBarang::destroy($id);
+        } catch (\Throwable $th) {
+            return to_route('jenisbarang.index')->with('error', 'Gagal menghapus jenis barang. Terdapat data yang terkait');
+        }
+        return to_route('jenisbarang.index')->with('success', 'Jenis barang berhasil dihapus');
     }
 
 }
