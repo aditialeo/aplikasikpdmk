@@ -316,11 +316,11 @@ return [
             'url'         => 'barang',
             'icon'        => 'fas fa-fw fa-boxes',
         ],
-        [
-            'text'        => 'Titip Barang',
-            'url'         => 'titip-barang',
-            'icon'        => 'fas fa-fw fa-save',
-        ],
+        // [
+        //     'text'        => 'Titip Barang',
+        //     'url'         => 'titip-barang',
+        //     'icon'        => 'fas fa-fw fa-save',
+        // ],
         [
             'text'        => 'Barang Masuk',
             'url'         => 'barangmasuk',
