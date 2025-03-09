@@ -290,126 +290,78 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        // [
-        //     'type'         => 'navbar-search',
-        //     'text'         => 'search',
-        //     'topnav_right' => true,
-        // ],
-        // [
-        //     'type'         => 'fullscreen-widget',
-        //     'topnav_right' => true,
-        // ],
-
-        // Sidebar items:
-        // [
-        //     'type' => 'sidebar-menu-search',
-        //     'text' => 'search',
-        // ],
         [
             'text'        => 'Beranda',
             'url'         => 'dashboard',
-            'icon'        => 'far fa-fw fa-file'
+            'icon'        => 'far fa-fw fa-file',
+            'can'         => 'read-beranda',
         ],
         [
             'text'        => 'Barang',
             'url'         => 'barang',
             'icon'        => 'fas fa-fw fa-boxes',
+            'can'         => 'read-barang',
         ],
-        // [
-        //     'text'        => 'Titip Barang',
-        //     'url'         => 'titip-barang',
-        //     'icon'        => 'fas fa-fw fa-save',
-        // ],
         [
             'text'        => 'Barang Masuk',
             'url'         => 'barangmasuk',
             'icon'        => 'fas fa-fw fa-box-open',
+            'can'         => 'read-barangmasuk',
         ],
         [
             'text'        => 'Barang Keluar',
             'url'         => 'barangkeluar',
             'icon'        => 'fas fa-fw fa-parachute-box',
+            'can'         => 'read-barangkeluar',
         ],
         [
             'text'        => 'Riwayat Transaksi Barang',
             'url'         => 'riwayattransaksibarang',
             'icon'        => 'fas fa-fw fa-business-time',
+            'can'         => 'read-riwayattransaksibarang',
         ],
         [
             'text'        => 'Suplair',
             'url'         => 'suplair',
             'icon'        => 'fas fa-fw fa-shipping-fast',
+            'can'         => 'read-suplair',
         ],
         [
             'text'        => 'Satuan Barang',
             'url'         => 'satuanbarang',
             'icon'        => 'fas fa-fw fa-ruler-horizontal',
+            'can'         => 'read-satuanbarang',
         ],
         [
             'text'        => 'Merk',
             'url'         => 'merk',
             'icon'        => 'fas fa-fw fa-tags',
+            'can'         => 'read-merk',
         ],
         [
             'text'        => 'Jenis Barang',
             'url'         => 'jenisbarang',
             'icon'        => 'fas fa-fw fa-grip-vertical',
+            'can'         => 'read-jenisbarang',
         ],
         [
             'text'        => 'User',
             'url'         => 'user',
             'icon'        => 'far fa-fw fa-user',
+            'can'         => 'read-user',
         ],
-        // ['header' => 'account_settings'],
-        // [
-        //     'text' => 'profile',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
-        // [
-        //     'text' => 'change_password',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
-        // [
-        //     'text'    => 'multilevel',
-        //     'icon'    => 'fas fa-fw fa-share',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text'    => 'level_one',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url'  => '#',
-        //                 ],
-        //                 [
-        //                     'text'    => 'level_two',
-        //                     'url'     => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //     ],
-        // ],
+        [
+            'text'        => 'Permission',
+            'url'         => 'permissions',
+            'icon'        => 'fas fa-fw fa-check',
+            'can'         => 'read-permission',
+        ],
+        [
+            'text'        => 'Role',
+            'url'         => 'roles',
+            'icon'        => 'fas fa-fw fa-user-tag',
+            'can'         => 'read-role',
+        ],
 
     ],
 

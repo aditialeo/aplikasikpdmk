@@ -4,18 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $user = User::latest()->get();
-        return view('user.index',compact('user'));
+        $users = User::with('roles')->latest()->get();
+        $roles = Role::all();
+        return view('user.index', compact('users', 'roles'));
     }
 
     public function create()
     {
         return view('user.create');
+    }
+
+    public function addRole(Request $request)
+    {
+        $request->validate([
+            'role' => 'required|string|exists:roles,name',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($request->user_id);
+        $user->assignRole($request->role);
+
+        session()->flash('success', 'Role added successfully.');
+
+        return to_route('user.index');
     }
 
     public function store(Request $request)
@@ -41,10 +58,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('user.edit',compact('user'));
+        return view('user.edit', compact('user'));
     }
 
-    public function update($id,Request $request){
+    public function update($id, Request $request)
+    {
 
         $request->validate([
             'name' => 'required|string',
@@ -61,7 +79,8 @@ class UserController extends Controller
         return to_route('user.index');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         // $user = User::find($id);
         // $user->delete();
