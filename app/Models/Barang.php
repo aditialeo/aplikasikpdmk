@@ -11,7 +11,8 @@ class Barang extends Model
     protected $table ='barang';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    // protected $fillable = ['kd_barang'];
+    // protected $fillable = ['kd_barang'];.   protected $guarded = ['id']; Artinya: semua kolom boleh diisi massal
+     //(pakai $model->create([...])), kecuali kolom id
 
     public function jenisBarang()
     {

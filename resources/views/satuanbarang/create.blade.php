@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    // tombol kembali
+                    {{-- Tombol kembali ke halaman satuan barang --}}
                     <a name="" id="" class="btn btn-secondary float-right text-xs" href="{{ route('satuanbarang.index') }}"
                         role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
                 </div>

@@ -17,44 +17,45 @@ class RiwayatTransaksiBarangController extends Controller
      */
     public function index()
     {
-        $riwayattransaksibarang = RiwayatTransaksiBarang::all();
+
+        $riwayattransaksibarang = RiwayatTransaksiBarang::latest()->get(); // latest untuk urut data yang terbaru ke lama
         return view('riwayattransaksibarang.index',compact('riwayattransaksibarang'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $barangs = Barang::all();
-        $suplairs = Suplair::all();
-        $merks = Merk::all();
-        $jenisbarangs = JenisBarang::all();
+    // public function create()
+    // {
+    //     $barangs = Barang::all();
+    //     $suplairs = Suplair::all();
+    //     $merks = Merk::all();
+    //     $jenisbarangs = JenisBarang::all();
 
-        return view('riwayattransaksibarang.create',compact('barangs','suplairs','merks','jenisbarangs'));
-    }
+    //     return view('riwayattransaksibarang.create',compact('barangs','suplairs','merks','jenisbarangs'));
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_barang' => 'required',
-            'kd_barang' => 'required',
-            'barang_masuk' => 'required',
-            'jenis_barang_id' => 'required',
-            'suplair_id'=>'required',
-            'merk_id' =>'required',
-            'jumlah_masuk'=>'required',
-            'jenis'=>'required'
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'nama_barang' => 'required',
+    //         'kd_barang' => 'required',
+    //         'barang_masuk' => 'required',
+    //         'jenis_barang_id' => 'required',
+    //         'suplair_id'=>'required',
+    //         'merk_id' =>'required',
+    //         'jumlah_masuk'=>'required',
+    //         'jenis'=>'required'
+    //     ]);
 
-        RiwayatTransaksiBarang::create($request->all());
+    //     RiwayatTransaksiBarang::create($request->all());
 
-        return to_route('riwayattransaksibarang.index');
+    //     return to_route('riwayattransaksibarang.index');
 
-    }
+    // }
 
     /**
      * Display the specified resource.
@@ -85,6 +86,8 @@ class RiwayatTransaksiBarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $riwayat = RiwayatTransaksiBarang::find($id);
+        $riwayat->delete();
+        return to_route('riwayattransaksibarang.index');
     }
 }

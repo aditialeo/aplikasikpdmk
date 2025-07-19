@@ -31,20 +31,24 @@
                             <select class="form-control select2" name="kd_barang" id="kd_barang">
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->kd_barang }}" data-stok="{{ $barang->stok }}">
-                                        {{ $barang->kd_barang }} - {{$barang->nm_barang}} (stok:{{$barang->stok}})
+                                        {{ $barang->kd_barang }} - {{ $barang->nm_barang }} (stok:{{ $barang->stok }})
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="suplair_id">Suplair</label>
-                            <select class="form-control select2" name="suplair_id" id="suplair_id">
-                                @foreach ($suplairs as $suplair)
-                                    <option value="{{ $suplair->id }}">{{ $suplair->nama_suplair }}</option>
-                                @endforeach
-                            </select>
+                            <label for="nama_customer">Nama Customer</label>
+                            <input type="text" name="nama_customer"
+                                class="form-control @error('nama_customer') is-invalid @enderror"
+                                value="{{ old('nama_customer') }}" placeholder="Masukkan nama customer">
+                            @error('nama_customer')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
+
 
                         <div class="form-group">
                             <label for="merk_id">Merk</label>

@@ -24,7 +24,8 @@ class PermissionSeeder extends Seeder
             'jenisbarang',
             'user',
             'permission',
-            'role'
+            'role',
+            'suratjalan' // ⬅️ ini yang penting kamu tambahkan!
         ];
 
         foreach ($permissions as $permission) {

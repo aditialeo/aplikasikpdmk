@@ -24,17 +24,19 @@ class BarangRequest extends FormRequest
         return [
             'kd_barang' => 'required',
             'merk_id'=> 'required',
-            'suplair_id' => 'required',
+            'nama_customer' => 'required|string|max:255',
             'tanggal_keluar'=> 'required',
             'jumlah_keluar'=>'required',
         ];
     }
 
     // Untuk mengganti message validasi
-    // public function messages(): array
-    // {
-    //     return [
-    //         'tanggal_keluar.required' => ':attribute Isi Dong'
-    //     ];
-    // }
+    public function messages(): array
+{
+    return [
+        'nama_customer.required' => 'Nama customer harus diisi!',
+        'jumlah_keluar.required' => 'Jumlah keluar jangan dikosongi ya!',
+        'tanggal_keluar.required' => 'Tanggal keluar harus diisi!',
+    ];
+}
 }

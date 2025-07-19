@@ -107,8 +107,8 @@ class BarangController extends Controller
         $barang->update([
            'kd_barang'=>$request->kd_barang,
            'nm_barang'=>$request->nm_barang,
-           'satuan_barang-id'=>$request->satuan_barang_id,
-           'jenis_barang-id'=>$request->jenis_barang_id,
+           'satuan_barang_id'=>$request->satuan_barang_id,
+           'jenis_barang_id'=>$request->jenis_barang_id,
            'stok'=>$request->stok,
            'merk_id'=>$request->merk_id,
         ]);

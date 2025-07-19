@@ -12,6 +12,11 @@ class RiwayatTransaksiBarang extends Model
     protected $primarykey ='id';
     protected $guarded = ['id'];
 
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class,'kd_barang','kd_barang');
+    }
+
 
     public function barangMasuk()
     {

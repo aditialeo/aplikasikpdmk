@@ -362,9 +362,16 @@ return [
             'icon'        => 'fas fa-fw fa-user-tag',
             'can'         => 'read-role',
         ],
+        //[
+        // 'text' => 'Surat Jalan',
+        // 'url'  => 'surat-jalan',
+        // 'icon' => 'fas fa-truck',
+        // 'can'  => 'read-suratjalan',
+        // ],
 
     ],
-
+    /* apapun yang menu ingin ditambah jangan lupa sidernya letak diside bar melalui php artisan thinker
+    */
     /*
     |--------------------------------------------------------------------------
     | Menu Filters

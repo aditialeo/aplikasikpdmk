@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BarangRequest;
+//
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+// ✅ Custom internal models
 use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Models\JenisBarang;
 use App\Models\Merk;
 use App\Models\RiwayatTransaksiBarang;
-use App\Models\Suplair;
-use Illuminate\Http\Request;
+use App\Models\SuratJalanBarangKeluar;
+
+// ✅ Form request
+use App\Http\Requests\BarangRequest;
 
 class BarangKeluarController extends Controller
 {
@@ -19,7 +25,12 @@ class BarangKeluarController extends Controller
     public function index()
     {
         $barangkeluar = BarangKeluar::all();
-        return view('barangkeluar.index', compact('barangkeluar'));
+
+    // Ambil ID terakhir untuk dicetak
+    $lastBarangKeluar = BarangKeluar::latest()->first();
+    $idTerakhirBarangKeluar = $lastBarangKeluar ? $lastBarangKeluar->id : null;
+
+    return view('barangkeluar.index', compact('barangkeluar', 'idTerakhirBarangKeluar'));
     }
 
     /**
@@ -28,9 +39,9 @@ class BarangKeluarController extends Controller
     public function create()
     {
         $barangs = Barang::all();
-        $suplairs = Suplair::all();
+        // $suplairs = Suplair::all();
         $merks = Merk::all();
-        return view('barangkeluar.create', compact('barangs', 'suplairs', 'merks'));
+       return view('barangkeluar.create', compact('barangs', 'merks'));
     }
 
     /**
@@ -46,7 +57,13 @@ class BarangKeluarController extends Controller
             $request->request->add(['stok' => $request->jumlah_keluar]);
 
             // Membuat riwayat transaksi barang
-            $riwayat_barang = RiwayatTransaksiBarang::create($request->all());
+        //    $riwayat_barang = RiwayatTransaksiBarang::create([
+        //    'kd_barang' => $request->kd_barang,
+        //     'merk_id' => $request->merk_id,
+        //     'stok' => $request->jumlah_keluar,
+        //     'jenis' => 'barang_keluar',
+        //    ]);
+
             $barang = Barang::where(
                 'kd_barang',
                 $request->kd_barang
@@ -71,9 +88,9 @@ class BarangKeluarController extends Controller
     {
         $data = BarangKeluar::find($id);
         $barangs = Barang::all();
-        $suplairs = Suplair::all();
+        // $suplairs = Suplair::all();
         $merks = Merk::all();
-        return view('barangkeluar.edit', compact('data', 'barangs', 'suplairs', 'merks'));
+        return view('barangkeluar.edit', compact('data', 'barangs', 'merks'));
     }
 
     /**
@@ -86,7 +103,7 @@ class BarangKeluarController extends Controller
             'jumlah_keluar' => 'required',
             'tanggal_keluar' => 'required',
             'merk_id' => 'required',
-            'suplair_id' => 'required',
+            'nama_customer' => 'required|string',
         ]);
 
         //search barang keluar kemudian update stok barang berdasarkan stok barang keluar sebelumnya kemudian update barang keluar dengan stok baru kemudian update stok barang, stok barang keluar tidak boleh lebih besar dari stok barang
@@ -115,4 +132,59 @@ class BarangKeluarController extends Controller
 
         return redirect()->route('barangkeluar.index')->with('success', 'Berhasil menghapus barang keluar');
     }
+
+    // Tambahan: cetak surat jalan otomatis + update stok
+public function cetakSuratJalan($id)
+{
+
+
+    // Mulai transaksi agar rollback kalau error
+    DB::beginTransaction();
+
+    try {
+        // Ambil data barang keluar dan relasinya
+        $barangKeluar = BarangKeluar::with('barang', 'merk')->findOrFail($id);
+        $barang = $barangKeluar->barang;
+
+        // Cek apakah surat jalan sudah dibuat sebelumnya
+        $existing = SuratJalanBarangKeluar::where('barang_keluar_id', $barangKeluar->id)->first();
+        if ($existing) {
+            return back()->with('error', 'Surat jalan sudah pernah dibuat untuk barang ini.');
+        }
+
+        // Cek stok tersedia
+        if ($barang->stok < $barangKeluar->jumlah_keluar) {
+            return back()->with('error', 'Stok barang tidak mencukupi!');
+        }
+
+        // Kurangi stok barang
+        $barang->stok -= $barangKeluar->jumlah_keluar;
+        $barang->save();
+
+        // Generate nomor surat otomatis
+        $count = SuratJalanBarangKeluar::whereYear('created_at', now()->year)->count() + 1;
+        $nomor = 'SJ/' . now()->year . '/' . str_pad($count, 4, '0', STR_PAD_LEFT);
+
+        // Buat surat jalan baru
+        $suratJalan = SuratJalanBarangKeluar::create([
+            'nomor_surat' => $nomor,
+            'barang_keluar_id' => $barangKeluar->id,
+            'tanggal_surat' => now(),
+            'nama_penerima' => 'Default Penerima', // Nanti bisa pakai input form/modal
+            'nama_sales' => 'Default Sales',
+            'catatan' => '-',
+            'created_by' => auth()->id(),
+        ]);
+
+        DB::commit(); // Simpan semua jika tidak ada error
+
+        // Tampilkan surat jalan dalam bentuk view biasa dulu
+        return view('barangkeluar.surat-jalan-pdf', compact('suratJalan', 'barangKeluar'));
+
+    } catch (\Exception $e) {
+        DB::rollBack(); // Batalkan semua kalau error
+        return back()->with('error', 'Gagal mencetak surat jalan: ' . $e->getMessage());
+    }
+}
+
 }

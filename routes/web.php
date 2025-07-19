@@ -13,6 +13,8 @@ use App\Http\Controllers\TitipBarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\RiwayatTransaksiBarangController;
+use App\Http\Controllers\SuratJalanBarangKeluarController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,18 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/titip-barang', TitipBarangController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
+
+    //ini untuk fitur form surat jalan
+Route::get('/surat-jalan', [SuratJalanBarangKeluarController::class, 'index'])->name('surat-jalan.index');
+Route::get('/surat-jalan/create', [SuratJalanBarangKeluarController::class, 'create'])->name('surat-jalan.create');
+Route::post('/surat-jalan/store', [SuratJalanBarangKeluarController::class, 'store'])->name('surat-jalan.store');
+
+Route::get('/surat-jalan/{id}', [SuratJalanBarangKeluarController::class, 'show'])->name('surat-jalan.show');
+Route::get('/surat-jalan/{id}/edit', [SuratJalanBarangKeluarController::class, 'edit'])->name('surat-jalan.edit');
+Route::delete('/surat-jalan/{id}', [SuratJalanBarangKeluarController::class, 'destroy'])->name('surat-jalan.destroy');
+
+//cetak sj
+Route::get('/surat-jalan/{id}/cetak', [SuratJalanBarangKeluarController::class, 'cetak'])->name('surat-jalan.cetak');
 });
 
 Auth::routes();

@@ -34,22 +34,29 @@ class BarangMasukController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'kd_barang' => 'required',
-            'suplair_id' => 'required',
-            'jumlah_masuk' => 'required',
-            'merk_id' =>'required'
-        ],[
-            'kd_barang.required' => 'Kode barang wajib diisi',
-            'suplair_id.required' => 'Suplair wajib diisi',
-            'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
-            'merk_id.required' => 'Merk wajib diisi',
-        ]);
-       $barangMasuk = BarangMasuk::create($request->all());
-        return redirect()->route('barangmasuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
+   {
+    // Ambil data yang divalidasi lalu simpan ke variabel
+    $validated = $request->validate([
+        'kd_barang' => 'required',
+        'suplair_id' => 'required',
+        'jumlah_masuk' => 'required',
+        'merk_id' => 'required',
+    ], [
+        'kd_barang.required' => 'Kode barang wajib diisi',
+        'suplair_id.required' => 'Suplair wajib diisi',
+        'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
+        'merk_id.required' => 'Merk wajib diisi',
+    ]);
 
+    // Tambahkan ID user yang login
+    $validated['user_id'] = auth()->id();
+
+    // Simpan ke database
+    BarangMasuk::create($validated);
+
+    return redirect()->route('barangmasuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
     }
+
 
     /**
      * Display the specified resource.
