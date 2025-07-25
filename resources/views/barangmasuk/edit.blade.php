@@ -30,7 +30,8 @@
                             <select class="form-control select2" name="kd_barang" id="">
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->kd_barang }}"
-                                        @if ($barang->kd_barang == $barangmasuk->kd_barang) selected @endif>({{ $barang->kd_barang }}) {{$barang->nm_barang}}</option>
+                                        @if ($barang->kd_barang == $barangmasuk->kd_barang) selected @endif>({{ $barang->kd_barang }})
+                                        {{ $barang->nm_barang }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,6 +67,13 @@
                                         {{ $merk->nama }}</option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <!-- Input Tanggal Masuk -->
+                        <div class="form-group">
+                            <label for="tanggal_masuk">Tanggal Masuk</label>
+                            <input type="date" name="tanggal_masuk" class="form-control"
+                                value="{{ old('tanggal_masuk', $barangmasuk->tanggal_masuk ? $barangmasuk->tanggal_masuk->format('Y-m-d') : '') }}">
                         </div>
 
 

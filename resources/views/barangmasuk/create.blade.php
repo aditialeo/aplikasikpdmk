@@ -66,6 +66,15 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="tanggal_masuk">Tanggal Masuk</label>
+                            <input type="date" name="tanggal_masuk" class="form-control"
+                                value="{{ old('tanggal_masuk', isset($barangMasuk) ? $barangMasuk->tanggal_masuk : '') }}"
+                                required>
+                        </div>
+                        <button type="button" id="add-barang" class="btn btn-info mt-2">+ Tambah Barang</button>
+
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>

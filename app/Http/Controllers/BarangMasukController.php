@@ -41,11 +41,13 @@ class BarangMasukController extends Controller
         'suplair_id' => 'required',
         'jumlah_masuk' => 'required',
         'merk_id' => 'required',
+        'tanggal_masuk' => 'required|date',
     ], [
         'kd_barang.required' => 'Kode barang wajib diisi',
         'suplair_id.required' => 'Suplair wajib diisi',
         'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
         'merk_id.required' => 'Merk wajib diisi',
+        'tanggal_masuk' => $request->tanggal_masuk,
     ]);
 
     // Tambahkan ID user yang login
@@ -89,7 +91,9 @@ class BarangMasukController extends Controller
         'kd_barang' => 'required',
         'suplair_id' => 'required',
         'jumlah_masuk' => 'required',
-        'merk_id' =>'required'
+        'merk_id' =>'required',
+        'tanggal_masuk' => 'required|date',
+
     ]);
 
     $barangmasuk = BarangMasuk::findOrFail($id);
@@ -99,6 +103,7 @@ class BarangMasukController extends Controller
         'suplair_id' => $request->suplair_id,
         'jumlah_masuk' => $request->jumlah_masuk,
         'merk_id' => $request->merk_id,
+        'tanggal_masuk' => $request->tanggal_masuk,
     ]);
 
     $riwayat = RiwayatTransaksiBarang::where('kd_barang',$barangmasuk->kd_barang)->latest()->first();

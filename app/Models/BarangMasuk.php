@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class BarangMasuk extends Model
 {
     use HasFactory;
+
     protected $table ='barang_masuk';
     protected $primarykey ='id';
     protected $guarded = ['id'];
+
+      //untuk tampilan tanggal bulan dan tahun agar flesibel bisa rubah mau dari tgl dulu atau bulan dulu atau tahun dulu
+    protected $casts = [
+        'tanggal_masuk' => 'date',
+    ];
 
 //belum clear disini
 

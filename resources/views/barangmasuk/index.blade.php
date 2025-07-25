@@ -36,6 +36,7 @@
                                 <th>Supplair</th>
                                 <th>Jumlah Masuk</th>
                                 <th>Nama Merk</th>
+                                <th>Tanggal Masuk</th>
                                 <th>Input Oleh</th>
                                 <th>#</th>
                             </tr>
@@ -49,6 +50,9 @@
                                     <td>{{ optional($data->suplair)->nama_suplair ?? 'Tidak ada supplair' }}</td>
                                     <td>{{ $data->jumlah_masuk }}</td>
                                     <td>{{ $data->merk->nama }}</td>
+                                    <td>{{ $data->tanggal_masuk ? \Carbon\Carbon::parse($data->tanggal_masuk)->isoFormat('dddd, D MMMM YYYY') : '-' }}
+                                    </td>
+
                                     <td>{{ optional($data->user)->name ?? 'Tidak diketahui' }}</td>
 
                                     <td>
