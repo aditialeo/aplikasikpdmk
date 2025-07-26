@@ -16,6 +16,7 @@ class BarangMasuk extends Model
       //untuk tampilan tanggal bulan dan tahun agar flesibel bisa rubah mau dari tgl dulu atau bulan dulu atau tahun dulu
     protected $casts = [
         'tanggal_masuk' => 'date',
+        'tanggal_keberangkatan' => 'date', // Menambahkan cast untuk tanggal keberangkatan
     ];
 
 //belum clear disini

@@ -46,9 +46,9 @@ class SuratJalanBarangKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        //  Validasi input dari form
+        // Validasi input dari form
         $request->validate([
-            'nomor_surat'     => 'required|unique:surat_jalan_barang_keluar,nomor_surat',
+           // 'nomor_surat'     => 'required|unique:surat_jalan_barang_keluar,nomor_surat',
             'nama_sales'      => 'required',
             'nama_penerima'   => 'required',
             'tanggal_surat'   => 'required|date',
@@ -60,11 +60,8 @@ class SuratJalanBarangKeluarController extends Controller
         ]);
 
         //  Mulai transaksi biar bisa rollback kalau gagal di tengah jalan
-        DB::beginTransaction();
-
-        try {
-            //  Simpan data utama surat jalan
-            $suratJalan = SuratJalanBarangKeluar::create([
+        //DB::beginTransaction();
+           $suratJalan = SuratJalanBarangKeluar::create([
                 'nomor_surat'     => $request->nomor_surat,
                 'nama_sales'      => $request->nama_sales,
                 'nama_penerima'   => $request->nama_penerima,
@@ -73,6 +70,19 @@ class SuratJalanBarangKeluarController extends Controller
                 'tanggal_keluar'  => $request->tanggal_keluar,
                 'created_by'      => auth()->id(),
             ]);
+
+
+        //try {
+            //  Simpan data utama surat jalan
+            // $suratJalan = SuratJalanBarangKeluar::create([
+            //     'nomor_surat'     => $request->nomor_surat,
+            //     'nama_sales'      => $request->nama_sales,
+            //     'nama_penerima'   => $request->nama_penerima,
+            //     'nama_customer'   => $request->nama_customer,
+            //     'tanggal_surat'   => $request->tanggal_surat,
+            //     'tanggal_keluar'  => $request->tanggal_keluar,
+            //     'created_by'      => auth()->id(),
+            // ]);
 
 
 
@@ -103,13 +113,13 @@ class SuratJalanBarangKeluarController extends Controller
             }
 
             //  Commit transaksi
-            DB::commit();
+            //DB::commit();
 
             return redirect()->route('surat-jalan.index')->with('success', 'Surat jalan berhasil disimpan.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan saat menyimpan: ' . $e->getMessage());
-        }
+       // } catch (\Exception $e) {
+            //DB::rollBack();
+           // return back()->with('error', 'Terjadi kesalahan saat menyimpan: ' . $e->getMessage());
+       // }
     }
     /**
      * Display the specified resource.

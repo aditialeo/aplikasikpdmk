@@ -33,31 +33,64 @@ class BarangMasukController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-   {
-    // Ambil data yang divalidasi lalu simpan ke variabel
-    $validated = $request->validate([
-        'kd_barang' => 'required',
-        'suplair_id' => 'required',
-        'jumlah_masuk' => 'required',
-        'merk_id' => 'required',
-        'tanggal_masuk' => 'required|date',
-    ], [
-        'kd_barang.required' => 'Kode barang wajib diisi',
-        'suplair_id.required' => 'Suplair wajib diisi',
-        'jumlah_masuk.required' => 'Jumlah masuk wajib diisi',
-        'merk_id.required' => 'Merk wajib diisi',
-        'tanggal_masuk' => $request->tanggal_masuk,
+   public function store(Request $request)
+{
+    // Validasi semua input termasuk input tambahan dan array barang
+    $request->validate([
+        // Field informasi tambahan (hanya 1x per transaksi)
+        'nomor_surat_jalan' => 'required|string',
+        'nama_kapal' => 'required|string',
+        'nomor_container' => 'required|string',
+        'tanggal_keberangkatan' => 'required|date',
+        'nama_penerima_barangmasuk' => 'required|string',
+
+        // Validasi isi array barang[] (setiap baris wajib isi semua)
+        'barang.*.kd_barang' => 'required',               // kode barang wajib
+        'barang.*.suplair_id' => 'required',              // suplair wajib
+        'barang.*.jumlah_masuk' => 'required|numeric',    // jumlah masuk harus angka
+        'barang.*.merk_id' => 'required',                 // merk wajib
+        'barang.*.tanggal_masuk' => 'required|date',      // tanggal masuk harus format tanggal
     ]);
 
-    // Tambahkan ID user yang login
-    $validated['user_id'] = auth()->id();
+    // Loop setiap barang yang dikirim dari form
+    foreach ($request->barang as $item) {
 
-    // Simpan ke database
-    BarangMasuk::create($validated);
+        // Simpan ke tabel barang_masuk
+        BarangMasuk::create([
+            'kd_barang' => $item['kd_barang'],
+            'suplair_id' => $item['suplair_id'],
+            'jumlah_masuk' => $item['jumlah_masuk'],
+            'merk_id' => $item['merk_id'],
+            'tanggal_masuk' => $item['tanggal_masuk'],
 
-    return redirect()->route('barangmasuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
+            // Salin data tambahan dari atas ke setiap baris barang_masuk
+            'nomor_surat_jalan' => $request->nomor_surat_jalan,
+            'nama_kapal' => $request->nama_kapal,
+            'nomor_container' => $request->nomor_container,
+            'tanggal_keberangkatan' => $request->tanggal_keberangkatan,
+            'nama_penerima_barangmasuk' => $request->nama_penerima_barangmasuk,
+
+            // Ambil ID user yang login
+            'user_id' => auth()->id(),
+        ]);
+
+        // Ambil data barang berdasarkan kode
+        $barangModel = Barang::where('kd_barang', $item['kd_barang'])->first();
+
+        // Simpan ke riwayat transaksi barang
+        RiwayatTransaksiBarang::create([
+        'kd_barang' => $item['kd_barang'],
+        'nama_barang' => $barangModel->nm_barang,
+        'jenis' => 'barang_masuk',
+        'stok' => $item['jumlah_masuk'],
+        'tanggal_transaksi' => now(),
+        ]);
     }
+
+    // Setelah semua selesai, redirect kembali ke halaman index
+    return redirect()->route('barangmasuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
+}
+
 
 
     /**
