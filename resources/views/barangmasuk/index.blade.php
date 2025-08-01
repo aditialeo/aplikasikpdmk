@@ -24,6 +24,7 @@
                     <a class="btn btn-primary float-right text-xs" href="{{ route('barangmasuk.create') }}" role="button">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Barang Masuk
                     </a>
+
                 </div>
 
                 <div class="card-body">

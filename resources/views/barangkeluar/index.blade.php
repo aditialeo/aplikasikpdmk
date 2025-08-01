@@ -26,9 +26,9 @@
                             </button>
                         </div>
                     @endif
-                    <a name="" id="" class="btn btn-primary text-xs float-right"
+                    {{-- <a name="" id="" class="btn btn-primary text-xs float-right"
                         href="{{ route('barangkeluar.create') }}" role="button"><i class="fa fa-plus-circle"
-                            aria-hidden="true"></i> Tambah Barang Keluar</a>
+                            aria-hidden="true"></i> Tambah Barang Keluar</a> --}}
 
                     {{-- ✅ Tombol Cetak Surat Jalan (digabung) --}}
                     <a href="{{ route('surat-jalan.create') }}" class="btn btn-success text-xs float-right">

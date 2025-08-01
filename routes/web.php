@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
 
-    //ini untuk fitur form surat jalan
+    //ini untuk fitur form surat jalan  
 Route::get('/surat-jalan', [SuratJalanBarangKeluarController::class, 'index'])->name('surat-jalan.index');
 Route::get('/surat-jalan/create', [SuratJalanBarangKeluarController::class, 'create'])->name('surat-jalan.create');
 Route::post('/surat-jalan/store', [SuratJalanBarangKeluarController::class, 'store'])->name('surat-jalan.store');
