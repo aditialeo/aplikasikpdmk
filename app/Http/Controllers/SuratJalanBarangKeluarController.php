@@ -103,6 +103,7 @@ class SuratJalanBarangKeluarController extends Controller
                 'barang_id'      => $barangId,
                 'kd_barang'      => $request->kd_barang[$index],
                 'merk_id'        => $request->merk_id[$index],
+                'nama_customer'   => $request->nama_customer,
                 'jumlah_keluar'  => $request->jumlah_pesanan[$index],
                 'tanggal_keluar' => $request->tanggal_keluar,
             ]);
@@ -185,6 +186,7 @@ class SuratJalanBarangKeluarController extends Controller
             ], [
                 'merk_id'        => $request->merk_id[$index],
                 'jumlah_keluar'  => $request->jumlah_pesanan[$index],
+                'nama_customer'   => $request->nama_customer,
                 'tanggal_keluar' => $request->tanggal_keluar,
             ]);
 

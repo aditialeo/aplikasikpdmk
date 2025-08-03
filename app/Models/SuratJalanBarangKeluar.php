@@ -17,7 +17,7 @@ class SuratJalanBarangKeluar extends Model
 
     public function barangKeluars()
     {
-        return $this->belongsToMany(Barang::class, 'barang_keluar', 'surat_jalan_id', 'kd_barang', 'id', 'kd_barang')->withPivot(['merk_id', 'jumlah_keluar']); // jika pakai timestamps di pivot
+        return $this->belongsToMany(Barang::class, 'barang_keluar', 'surat_jalan_id', 'kd_barang', 'id', 'kd_barang')->withPivot(['merk_id', 'jumlah_keluar', 'nama_customer']); // jika pakai timestamps di pivot
     }
 
 
