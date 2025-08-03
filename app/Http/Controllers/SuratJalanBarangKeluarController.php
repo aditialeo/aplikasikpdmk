@@ -123,7 +123,7 @@ class SuratJalanBarangKeluarController extends Controller
      */
     public function show($id)
     {
-        $suratJalan = SuratJalanBarangKeluar::with('barangKeluars.barang', 'barangKeluars.merk')->findOrFail($id);
+        $suratJalan = SuratJalanBarangKeluar::findOrFail($id);
         return view('suratjalan.show', compact('suratJalan'));
     }
 
