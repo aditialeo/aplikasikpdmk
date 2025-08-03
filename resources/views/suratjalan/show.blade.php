@@ -56,7 +56,7 @@
                             <td>{{ $barangKeluar->nm_barang ?? '-' }}</td>
                             <td>{{ $barangKeluar->kd_barang }}</td>
                             <td>{{ $barangKeluar->merk->nama ?? '-' }}</td>
-                            <td>{{ $barangKeluar->jumlah_keluar }}</td>
+                            <td>{{ $barangKeluar->pivot->jumlah_keluar }}</td>
                         </tr>
                     @endforeach
                 </tbody>
