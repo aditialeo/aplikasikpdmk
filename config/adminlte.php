@@ -314,12 +314,12 @@ return [
             'icon'        => 'fas fa-fw fa-parachute-box',
             'can'         => 'read-barangkeluar',
         ],
-        [
-            'text'        => 'Riwayat Transaksi Barang',
-            'url'         => 'riwayattransaksibarang',
-            'icon'        => 'fas fa-fw fa-business-time',
-            'can'         => 'read-riwayattransaksibarang',
-        ],
+        // [
+        //     'text'        => 'Riwayat Transaksi Barang',
+        //     'url'         => 'riwayattransaksibarang',
+        //     'icon'        => 'fas fa-fw fa-business-time',
+        //     'can'         => 'read-riwayattransaksibarang',
+        // ],
         [
             'text'        => 'Suplair',
             'url'         => 'suplair',

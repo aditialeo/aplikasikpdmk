@@ -14,10 +14,12 @@ class SuratJalanBarangKeluar extends Model
     protected $guarded = ['id'];
 
     // Relasi satu surat jalan bisa punya banyak barang keluar
+
     public function barangKeluars()
     {
-        return $this->hasMany(BarangKeluar::class, 'surat_jalan_id');
+        return $this->belongsToMany(Barang::class, 'barang_keluar', 'surat_jalan_id', 'kd_barang', 'id', 'kd_barang')->withPivot(['merk_id', 'jumlah_keluar']); // jika pakai timestamps di pivot
     }
+
 
     // Jika tetap ingin akses satu barang (opsional, jika tidak pakai relasi langsung bisa dihapus)
     public function barang()

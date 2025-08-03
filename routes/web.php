@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/surat-jalan/{id}', [SuratJalanBarangKeluarController::class, 'show'])->name('surat-jalan.show');
     Route::get('/surat-jalan/{id}/edit', [SuratJalanBarangKeluarController::class, 'edit'])->name('surat-jalan.edit');
+    Route::post('/surat-jalan/{id}/update', [SuratJalanBarangKeluarController::class, 'update'])->name('surat-jalan.update');
     Route::delete('/surat-jalan/{id}', [SuratJalanBarangKeluarController::class, 'destroy'])->name('surat-jalan.destroy');
 
     //cetak sj

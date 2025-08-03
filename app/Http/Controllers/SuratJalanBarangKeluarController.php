@@ -18,7 +18,7 @@ class SuratJalanBarangKeluarController extends Controller
     public function index()
     {
         // ✅ UPDATED: Eager load barangKeluar untuk multi item
-        $suratJalans = SuratJalanBarangKeluar::with(['barangKeluars.barang'])->get();
+        $suratJalans = SuratJalanBarangKeluar::all();
 
         //dd($suratJalans);
 
@@ -48,7 +48,7 @@ class SuratJalanBarangKeluarController extends Controller
     {
         // Validasi input dari form
         $request->validate([
-           // 'nomor_surat'     => 'required|unique:surat_jalan_barang_keluar,nomor_surat',
+            // 'nomor_surat'     => 'required|unique:surat_jalan_barang_keluar,nomor_surat',
             'nama_sales'      => 'required',
             'nama_penerima'   => 'required',
             'tanggal_surat'   => 'required|date',
@@ -61,65 +61,61 @@ class SuratJalanBarangKeluarController extends Controller
 
         //  Mulai transaksi biar bisa rollback kalau gagal di tengah jalan
         //DB::beginTransaction();
-           $suratJalan = SuratJalanBarangKeluar::create([
-                'nomor_surat'     => $request->nomor_surat,
-                'nama_sales'      => $request->nama_sales,
-                'nama_penerima'   => $request->nama_penerima,
-                'nama_customer'   => $request->nama_customer,
-                'tanggal_surat'   => $request->tanggal_surat,
-                'tanggal_keluar'  => $request->tanggal_keluar,
-                'created_by'      => auth()->id(),
-            ]);
+        $suratJalan = SuratJalanBarangKeluar::create([
+            'nomor_surat'     => $request->nomor_surat,
+            'nama_sales'      => $request->nama_sales,
+            'nama_penerima'   => $request->nama_penerima,
+            'nama_customer'   => $request->nama_customer,
+            'tanggal_surat'   => $request->tanggal_surat,
+            'tanggal_keluar'  => $request->tanggal_keluar,
+            'created_by'      => auth()->id(),
+        ]);
 
 
         //try {
-            //  Simpan data utama surat jalan
-            // $suratJalan = SuratJalanBarangKeluar::create([
-            //     'nomor_surat'     => $request->nomor_surat,
-            //     'nama_sales'      => $request->nama_sales,
-            //     'nama_penerima'   => $request->nama_penerima,
-            //     'nama_customer'   => $request->nama_customer,
-            //     'tanggal_surat'   => $request->tanggal_surat,
-            //     'tanggal_keluar'  => $request->tanggal_keluar,
-            //     'created_by'      => auth()->id(),
-            // ]);
+        //  Simpan data utama surat jalan
+        // $suratJalan = SuratJalanBarangKeluar::create([
+        //     'nomor_surat'     => $request->nomor_surat,
+        //     'nama_sales'      => $request->nama_sales,
+        //     'nama_penerima'   => $request->nama_penerima,
+        //     'nama_customer'   => $request->nama_customer,
+        //     'tanggal_surat'   => $request->tanggal_surat,
+        //     'tanggal_keluar'  => $request->tanggal_keluar,
+        //     'created_by'      => auth()->id(),
+        // ]);
 
 
 
-            //  Loop barang
-            foreach ($request->barang_id as $index => $barangId) {
-                $barang = Barang::find($barangId);
+        //  Loop barang
+        foreach ($request->barang_id as $index => $barangId) {
+            $barang = Barang::find($barangId);
 
-                //  Validasi: Apakah stok mencukupi?
-                if (!$barang || $barang->stok < $request->jumlah_pesanan[$index]) {
-                    // Batalkan transaksi dan kembalikan pesan error
-                    DB::rollBack();
-                    return back()->with('error', 'Stok barang "' . ($barang->nm_barang ?? 'Unknown') . '" tidak mencukupi.');
-                }
-
-                //  Simpan ke barang keluar
-                BarangKeluar::create([
-                    'surat_jalan_id' => $suratJalan->id,
-                    'barang_id'      => $barangId,
-                    'kd_barang'      => $request->kd_barang[$index],
-                    'merk_id'        => $request->merk_id[$index],
-                    'jumlah_keluar'  => $request->jumlah_pesanan[$index],
-                    'tanggal_keluar' => $request->tanggal_keluar,
-                ]);
-
-                // Kurangi stok
-                $barang->stok -= $request->jumlah_pesanan[$index];
-                $barang->save();
+            //  Validasi: Apakah stok mencukupi?
+            if (!$barang || $barang->stok < $request->jumlah_pesanan[$index]) {
+                // Batalkan transaksi dan kembalikan pesan error
+                DB::rollBack();
+                return back()->with('error', 'Stok barang "' . ($barang->nm_barang ?? 'Unknown') . '" tidak mencukupi.');
             }
 
-            //  Commit transaksi
-            //DB::commit();
+            //  Simpan ke barang keluar
+            BarangKeluar::create([
+                'surat_jalan_id' => $suratJalan->id,
+                'barang_id'      => $barangId,
+                'kd_barang'      => $request->kd_barang[$index],
+                'merk_id'        => $request->merk_id[$index],
+                'jumlah_keluar'  => $request->jumlah_pesanan[$index],
+                'tanggal_keluar' => $request->tanggal_keluar,
+            ]);
 
-            return redirect()->route('surat-jalan.index')->with('success', 'Surat jalan berhasil disimpan.');
-       // } catch (\Exception $e) {
-            //DB::rollBack();
-           // return back()->with('error', 'Terjadi kesalahan saat menyimpan: ' . $e->getMessage());
-       // }
+            // Kurangi stok
+            $barang->stok -= $request->jumlah_pesanan[$index];
+            $barang->save();
+        }
+
+        //  Commit transaksi
+        //DB::commit();
+
+        return redirect()->route('surat-jalan.index')->with('success', 'Surat jalan berhasil disimpan.');
     }
     /**
      * Display the specified resource.
@@ -135,7 +131,10 @@ class SuratJalanBarangKeluarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $suratJalan = SuratJalanBarangKeluar::with('barang')->find($id);
+        $barangs = Barang::all();
+        $merks = Merk::all();
+        return view('suratjalan.edit', compact('suratJalan', 'barangs', 'merks'));
     }
 
     /**
@@ -143,7 +142,58 @@ class SuratJalanBarangKeluarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            // 'nomor_surat'     => 'required|unique:surat_jalan_barang_keluar,nomor_surat',
+            'nama_sales'      => 'required',
+            'nama_penerima'   => 'required',
+            'tanggal_surat'   => 'required|date',
+            'tanggal_keluar'  => 'required|date',
+            'barang_id'       => 'required|array',
+            'kd_barang'       => 'required|array',
+            'merk_id'         => 'required|array',
+            'jumlah_pesanan'  => 'required|array',
+        ]);
+
+        //  Mulai transaksi biar bisa rollback kalau gagal di tengah jalan
+        //DB::beginTransaction();
+        $suratJalan = SuratJalanBarangKeluar::updateOrCreate(
+            ['nomor_surat'     => $request->nomor_surat,],
+            [
+                'nama_sales'      => $request->nama_sales,
+                'nama_penerima'   => $request->nama_penerima,
+                'nama_customer'   => $request->nama_customer,
+                'tanggal_surat'   => $request->tanggal_surat,
+                'tanggal_keluar'  => $request->tanggal_keluar,
+                'created_by'      => auth()->id(),
+            ]
+        );
+
+        foreach ($request->barang_id as $index => $barangId) {
+            $barang = Barang::find($barangId);
+
+            //  Validasi: Apakah stok mencukupi?
+            if (!$barang || $barang->stok < $request->jumlah_pesanan[$index]) {
+                // Batalkan transaksi dan kembalikan pesan error
+                DB::rollBack();
+                return back()->with('error', 'Stok barang "' . ($barang->nm_barang ?? 'Unknown') . '" tidak mencukupi.');
+            }
+
+            //  Simpan ke barang keluar
+            BarangKeluar::updateOrCreate([
+                'surat_jalan_id' => $suratJalan->id,
+                'kd_barang'      => $request->kd_barang[$index],
+            ], [
+                'merk_id'        => $request->merk_id[$index],
+                'jumlah_keluar'  => $request->jumlah_pesanan[$index],
+                'tanggal_keluar' => $request->tanggal_keluar,
+            ]);
+
+            // Kurangi stok
+            $barang->stok -= $request->jumlah_pesanan[$index];
+            $barang->save();
+        }
+
+        return redirect()->route('surat-jalan.index')->with('success', 'Surat jalan berhasil disimpan.');
     }
 
     /**
