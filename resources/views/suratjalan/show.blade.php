@@ -53,7 +53,7 @@
                     @foreach ($suratJalan->barangKeluars as $index => $barangKeluar)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $barangKeluar->barang->nm_barang ?? '-' }}</td>
+                            <td>{{ $barangKeluar->nm_barang ?? '-' }}</td>
                             <td>{{ $barangKeluar->kd_barang }}</td>
                             <td>{{ $barangKeluar->merk->nama ?? '-' }}</td>
                             <td>{{ $barangKeluar->jumlah_keluar }}</td>
