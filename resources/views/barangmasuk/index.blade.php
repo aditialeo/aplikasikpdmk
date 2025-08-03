@@ -32,6 +32,11 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
+                                <th>Nomor Surat Jalan</th>
+                                <th>Nama Kapal</th>
+                                <th>Nomor Kontainer</th>
+                                <th>Tanggal Keberangkatan</th>
+                                <th>Nama Penerima</th>
                                 <th>Nama Barang</th>
                                 <th>Kode Barang</th>
                                 <th>Supplair</th>
@@ -46,6 +51,11 @@
                             @foreach ($barangmasuk as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->nomor_surat_jalan }}</td>
+                                    <td>{{ $data->nama_kapal }}</td>
+                                    <td>{{ $data->nomor_kontainer }}</td>
+                                    <td>{{ $data->tanggal_keberangkatan }}</td>
+                                    <td>{{ $data->nama_penerima_barangmasuk }}</td>
                                     <td>{{ $data->barang->nm_barang }}</td>
                                     <td>{{ $data->kd_barang }}</td>
                                     <td>{{ optional($data->suplair)->nama_suplair ?? 'Tidak ada supplair' }}</td>

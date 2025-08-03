@@ -52,6 +52,8 @@ class BarangMasukController extends Controller
             'barang.*.tanggal_masuk' => 'required|date',      // tanggal masuk harus format tanggal
         ]);
 
+        // dd($request->all());
+
         // Loop setiap barang yang dikirim dari form
         foreach ($request->barang as $item) {
 
@@ -84,7 +86,7 @@ class BarangMasukController extends Controller
                 'jenis' => 'barang_masuk',
                 'stok' => $item['jumlah_masuk'],
                 'suplair_id' => $item['suplair_id'],
-                'merk_id' => $item['merk_id'],  
+                'merk_id' => $item['merk_id'],
                 'tanggal_transaksi' => now(),
             ]);
         }
