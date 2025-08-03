@@ -55,7 +55,8 @@
                                         <td>{{ $data->nomor_surat_jalan }}</td>
                                         <td>{{ $data->nama_kapal }}</td>
                                         <td>{{ $data->nomor_container }}</td>
-                                        <td>{{ $data->tanggal_keberangkatan }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_keberangkatan)->format('d M Y') }}
+                                        </td>
                                         <td>{{ $data->nama_penerima_barangmasuk }}</td>
                                         <td>{{ $data->barang->nm_barang }}</td>
                                         <td>{{ $data->kd_barang }}</td>
