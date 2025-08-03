@@ -31,8 +31,11 @@
                             aria-hidden="true"></i> Tambah Barang Keluar</a> --}}
 
                     {{-- ✅ Tombol Cetak Surat Jalan (digabung) --}}
-                    <a href="{{ route('surat-jalan.create') }}" class="btn btn-success text-xs float-right">
+                    <a href="{{ route('surat-jalan.create') }}" class="btn btn-success text-xs float-right ml-2">
                         <i class="fa fa-file-signature"></i> Input Surat Jalan
+                    </a>
+                    <a href="{{ route('surat-jalan.index') }}" class="btn btn-info text-xs float-right">
+                        <i class="fa fa-file"></i> Data Surat Jalan
                     </a>
 
                 </div>
